@@ -29,4 +29,8 @@ require (
 	github.com/jinzhu/now v1.1.2 // indirect
 )
 
-require github.com/go-sql-driver/mysql v1.5.0 // indirect
+require (
+	github.com/go-sql-driver/mysql v1.5.0 // indirect
+	github.com/golang/snappy v0.0.4 // indirect
+	github.com/nsqio/go-nsq v1.1.0 // indirect
+)
