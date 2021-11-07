@@ -17,19 +17,8 @@ type Envelope struct {
 	SnatchTime int64 `json:"snatch_time"`
 }
 
-type PublicOpenedEnvelope struct {
-	*Envelope           // 匿名嵌套
-	UID       *struct{} `json:"uid,omitempty"`
-}
-
-type PublicClosedEnvelope struct {
-	*Envelope           // 匿名嵌套
-	UID       *struct{} `json:"uid,omitempty"`
-	Value     *struct{} `json:"value,omitempty"`
-}
-
 func (Envelope) TableName() string {
-	return "red_envelope"
+	return "envelopes"
 }
 
 func GetAllEnvelopesByUID(uid int64) ([]*Envelope, error) {
@@ -66,14 +55,14 @@ func CreateEnvelope(user User) (envelope Envelope) {
 	if err != nil {
 		fmt.Println(err)
 	}
-	snatch_time := time.Now().UnixNano()
+	snatchTime := time.Now().UnixNano()
 	var a int64 = 10
-	envelope = Envelope{UID: user.ID, Opened: false, Value: a, SnatchTime: snatch_time}
+	envelope = Envelope{UID: user.UID, Opened: false, Value: a, SnatchTime: snatchTime}
 	db.Create(&envelope)
 	return envelope
 }
 
-func UpdateState(envelope_id int64) (envelope Envelope) {
+func UpdateState(envelopeId int64) (envelope Envelope) {
 
 	db, err := gorm.Open("mysql", "root:zyz123456@/test?charset=utf8&parseTime=True&loc=Local")
 	defer db.Close()
@@ -81,7 +70,7 @@ func UpdateState(envelope_id int64) (envelope Envelope) {
 		fmt.Println(err)
 	}
 	//查询条件
-	envelope.ID = envelope_id
+	envelope.ID = envelopeId
 	db.Model(&envelope).Update("opened", true)
 	return
 }

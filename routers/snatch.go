@@ -1,7 +1,6 @@
 package routers
 
 import (
-	"math/rand"
 	"red_envelop_server/sql"
 	"strconv"
 
@@ -59,17 +58,17 @@ func SnatchHandler(c *gin.Context) {
 		return
 	}
 
-	//根据概率计算用户这次应不应该拿到红包，这里我想的是对所有的请求做统一的处理，直接放弃一部分请求不处理，
-	//这样既满足了概率也减轻了后端的压力,只处理十分之一的请求
-	rand_num := rand.Intn(10)
-	if rand_num != 0 {
-		flag = false
-		c.JSON(200, gin.H{
-			"code": -3,
-			"msg":  "According to the probability, the red envelope can not be snatched this time",
-		})
-		return
-	}
+	////根据概率计算用户这次应不应该拿到红包，这里我想的是对所有的请求做统一的处理，直接放弃一部分请求不处理，
+	////这样既满足了概率也减轻了后端的压力,只处理十分之一的请求
+	//rand_num := rand.Intn(10)
+	//if rand_num != 0 {
+	//	flag = false
+	//	c.JSON(200, gin.H{
+	//		"code": -3,
+	//		"msg":  "According to the probability, the red envelope can not be snatched this time",
+	//	})
+	//	return
+	//}
 
 	if flag {
 		//如果上述的条件都满足了，并且概率正好也轮到了，为当前用户生成红包

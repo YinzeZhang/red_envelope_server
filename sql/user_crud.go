@@ -2,19 +2,17 @@ package sql
 
 import (
 	"fmt"
-
 	"github.com/jinzhu/gorm"
 )
 
-var userId int64 = 0
-
 type User struct {
 	ID    int64
+	UID int64
 	Count int64
 }
 
 func (User) TableName() string {
-	return "user"
+	return "users"
 }
 
 func GetUser(uid int64) (user User) {
@@ -23,7 +21,7 @@ func GetUser(uid int64) (user User) {
 	if err != nil {
 		fmt.Println(err)
 	}
-	db.FirstOrCreate(&user, User{ID: uid})
+	db.FirstOrCreate(&user, User{UID: uid})
 	return
 }
 
