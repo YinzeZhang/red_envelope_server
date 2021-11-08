@@ -34,7 +34,7 @@ func GetDB() *gorm.DB {
 }
 
 func InitDB() (*gorm.DB, error) {
-	db, err := gorm.Open("mysql", "root:3306@tcp(mysql:3306)/test?charset=utf8&parseTime=True&loc=Local")
+	db, err := gorm.Open("mysql", "root:3306@tcp(localhost:3306)/test?charset=utf8&parseTime=True&loc=Local")
 	if err == nil {
 		DB = db
 		db.AutoMigrate(&User{}, &Envelope{})
