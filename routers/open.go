@@ -21,6 +21,16 @@ func OpenHandler(c *gin.Context) {
 	int_uid, _ := strconv.ParseInt(uid, 10, 64)
 	int_envelope_id, _ := strconv.ParseInt(envelope_id, 10, 64)
 
+	//用户红包列表中有无此envelope_id，redis需要返回一个用户红包的数组func GetEnvelopes(uid int64) []int64
+	//遍历数组中每个envelope_id，检查有没有和请求对应的envelope_id。
+
+	//检查红包是否打开，redis需要返回一个用户红包的数组func HasOpened(envelope_id int64) bool，
+	//开过，返回提示
+	//没开过，用红包id查money并返回,redis需要提供func GetValueByUid(uid int64) int64，失效钱包列表缓存，修改bitmap数组状态
+	//更新数据库opened状态 func UpdateState(envelope_id int64)
+	//构造json并返回
+
+
 	//开红包的业务反应到程序中是
 	//1、找到envelope_id对应的红包，用uid和它检验一下（安全性之一）
 	//2、是opened = true,

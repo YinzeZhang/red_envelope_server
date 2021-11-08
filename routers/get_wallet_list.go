@@ -20,8 +20,13 @@ func WalletListHandler(c *gin.Context) {
 
 	int_uid, _ := strconv.ParseInt(uid, 10, 64)
 
-	envelopes, _ := sql.GetAllEnvelopesByUID(int_uid)
+	//现在主要是针对redis查询
+	//需要redis提供用户红包列表(id信息)func GetEnvelopeIdsByUid(uid int64) []int64
+	//需要redis提供用户红包列表(time信息)func GetEnvelopeTimesByUid(uid int64) []int64
+	//需要redis提供根据envelope_id查询红包钱数，func GetValueByEnvelopeId(envelope_id int64) int64
+	//剩下的排序和构造json之前已经有了
 
+	envelopes, _ := sql.GetAllEnvelopesByUID(int_uid)
 	//先安装时间排序
 	sort.SliceStable(envelopes, func(i, j int) bool {
 		return envelopes[i].SnatchTime < envelopes[j].SnatchTime
