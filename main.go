@@ -9,10 +9,10 @@ import (
 
 func main() {
 
-	db, _ := gorm.Open("mysql", "root:3306@172.27.11.82:3306/test?charset=utf8&parseTime=True&loc=Local")
+	db, _ := gorm.Open("mysql", "root:3306@tcp(172.27.11.82:3306)/test?charset=utf8&parseTime=True&loc=Local")
+	defer db.Close()
 	db.AutoMigrate(&sql.User{})
 	db.AutoMigrate(&sql.Envelope{})
-	//db.Close()
 
 	r := gin.Default()
 	routers.LoadSnatch(r)
