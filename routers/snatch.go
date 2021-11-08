@@ -1,19 +1,18 @@
 package routers
 
 import (
-	"red_envelop_server/sql"
-	"strconv"
-
 	"github.com/gin-gonic/gin"
 	logs "github.com/sirupsen/logrus"
+	"red_envelop_server/sql"
+	"strconv"
 )
+
 
 func LoadSnatch(e *gin.Engine) {
 	e.POST("/snatch", SnatchHandler)
 }
 
 func SnatchHandler(c *gin.Context) {
-
 	//每个人能抢的最大红包数应该从配置文件读进来
 	max_count := 5
 	//总红包数
@@ -27,7 +26,6 @@ func SnatchHandler(c *gin.Context) {
 
 	//根据uid查询用户，没有的话就创建用户
 	user := sql.GetUser(int_uid)
-
 	flag := true
 
 	//判断用户的count是否大于个人最多抢红包数

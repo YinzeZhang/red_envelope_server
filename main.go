@@ -1,22 +1,19 @@
 package main
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
-	"github.com/jinzhu/gorm"
+	"log"
 	"red_envelop_server/routers"
 	"red_envelop_server/sql"
 )
 
 func main() {
 
-	db, err := gorm.Open("mysql", "root:3306@tcp(mysql:3306)/test?charset=utf8&parseTime=True&loc=Local")
+	db, err := sql.InitDB()
 	if err != nil {
-		fmt.Println(err)
+		log.Println("database connection failure")
 	}
-	//defer db.Close()
-	db.AutoMigrate(&sql.User{})
-	db.AutoMigrate(&sql.Envelope{})
+	defer db.Close()
 
 	r := gin.Default()
 	routers.LoadSnatch(r)

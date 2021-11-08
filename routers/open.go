@@ -26,7 +26,7 @@ func OpenHandler(c *gin.Context) {
 	//2、是opened = true,
 	//3、如果这个红包已经开过了，判断一下直接返回就行
 	//因为其它的值在正常来说在创建红包时应该已经确定了，预热数据库，把除了uid之外的有关envelope的值全部确定
-	envelope := sql.GetEnvelopeByEevelopeID(int_envelope_id)
+	envelope := sql.GetEnvelopeByEnvelopeID(int_envelope_id)
 
 	flag := true
 
