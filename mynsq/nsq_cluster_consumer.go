@@ -1,4 +1,4 @@
-package main
+package mynsq
 
 import (
 	"fmt"
@@ -7,11 +7,15 @@ import (
 
 type Handler struct{}
 
+var snatchConsumer *nsq.Consumer
+var openConsumer *nsq.Consumer
+var walletConsumer *nsq.Consumer
+
 func (m *Handler) HandleMessage(msg *nsq.Message) (err error) {
 	addr := msg.NSQDAddress
-	message := string(msg.Body)
-	fmt.Println(addr, message)
-	return
+	uid := msg.Body
+	fmt.Println(addr, uid)
+	return nil
 }
 func NewConsumers(t string, c string, addr string) error {
 	conf := nsq.NewConfig()
@@ -29,12 +33,13 @@ func NewConsumers(t string, c string, addr string) error {
 	}
 	return nil
 }
+
 func main() {
 	// 这是nsqlookupd的地址
 	addr := "111.62.107.178:4161"
-	err := NewConsumers("test", "channel-aa", addr)
+	err := NewConsumers("snatch", "channel-1", addr)
 	if err != nil {
-		fmt.Println("new nsq consumer failed", err)
+		fmt.Println("new mynsq consumer failed", err)
 		return
 	}
 	select {}
